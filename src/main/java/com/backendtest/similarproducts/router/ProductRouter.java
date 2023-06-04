@@ -14,7 +14,5 @@ public class ProductRouter {
 
 	@Bean
 	public RouterFunction<ServerResponse> productRoutes(ProductHandler productHandler) {
-		return RouterFunctions
-				.route(RequestPredicates.GET("/product/{productId}"), productHandler::getProduct)
-				.andRoute(RequestPredicates.GET("/products/{productId}/similar"), productHandler::getSimilarProducts);}
+		return RouterFunctions.route(RequestPredicates.GET("/product/{productId}/similar"), productHandler::getSimilarProducts);}
 }

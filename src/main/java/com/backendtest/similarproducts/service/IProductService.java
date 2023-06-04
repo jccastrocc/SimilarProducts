@@ -10,6 +10,6 @@ public interface IProductService {
 
 	Mono<Product> getProduct(String id);
 
-	Mono<List<String>> getSimilarProducts(String productId);
+	Mono<List<Product>> getSimilarProducts(String productId);
 
 }

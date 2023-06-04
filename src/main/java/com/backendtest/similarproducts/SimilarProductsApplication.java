@@ -16,6 +16,7 @@ public class SimilarProductsApplication {
 		SpringApplication.run(SimilarProductsApplication.class, args);
 	}
 
+	
     @Bean
     WebClient webClient() {
 		return WebClient.builder().baseUrl(existingApisUrl)

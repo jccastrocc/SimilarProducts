@@ -29,15 +29,19 @@ public class ProductHandler {
                 .flatMap(product -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(product))
-                .switchIfEmpty(ServerResponse.notFound().build());
+                .switchIfEmpty(ServerResponse.status(HttpStatus.NOT_FOUND)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue("Product Not found"))
+                .onErrorResume(throwable -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).bodyValue("Product Not fount"));
     }
 
     public Mono<ServerResponse> getSimilarProducts(ServerRequest request) {
     	  String productId = request.pathVariable("productId");
-    	  Mono<List<String>> idsMono = productService.getSimilarProducts(productId);
+    	  Mono<List<Product>> idsMono = productService.getSimilarProducts(productId);
 
           return idsMono.flatMap(ids -> ServerResponse.ok().bodyValue(ids))
-                  .switchIfEmpty(ServerResponse.notFound().build())
-                  .onErrorResume(throwable -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).bodyValue("Error al obtener los IDs"));
-      }
+        		  .switchIfEmpty(ServerResponse.status(HttpStatus.NOT_FOUND)
+                          .contentType(MediaType.APPLICATION_JSON)
+                          .bodyValue("Product Not found"));
+		}
 }
