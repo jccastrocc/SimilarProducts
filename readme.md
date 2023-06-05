@@ -27,8 +27,8 @@ To run the service, follow these steps:
      Example request: GET http://localhost:5000/product/4/similar
 
      Example response:
-     ```json
-   [
+     ```json  
+     [
       {
          "id": "1",
          "name": "Shirt",
@@ -40,8 +40,8 @@ To run the service, follow these steps:
          "name": "Dress",
          "price": 19.99,
          "availability": true
-      }
-    ]
+       }
+     ]
      ```
      
 		Example request Not Found: GET http://localhost:5000/product/64/similar
@@ -51,7 +51,7 @@ To run the service, follow these steps:
 		  
 	    ```json
 	     Product Not found
-	     ```
+	    ```
 
 # Swagger
 
