@@ -15,7 +15,7 @@ To run the service, follow these steps:
 4. Run the following command to start the service:
 
    ```bash
-   docker-compose up -d similar_products
+   docker-compose up -d --build similar_products
    ```
 
    This will start the necessary containers and get the similar products service up and running.
