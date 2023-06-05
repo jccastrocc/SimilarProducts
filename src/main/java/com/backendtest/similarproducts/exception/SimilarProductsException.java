@@ -1,7 +1,5 @@
 package com.backendtest.similarproducts.exception;
 
-import com.backendtest.similarproducts.repository.impl.ProductRepositoryImpl;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

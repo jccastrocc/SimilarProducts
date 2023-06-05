@@ -3,6 +3,8 @@ package com.backendtest.similarproducts.repository.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Slf4j
+@CacheConfig(cacheNames = {"productRepositoryCache"})
 @Repository
 public class ProductRepositoryImpl implements IProductRepository {
 
@@ -26,7 +29,9 @@ public class ProductRepositoryImpl implements IProductRepository {
 		this.webClient = webClient;
 	}
 
+	
 	@Override
+	@Cacheable()
 	public Mono<Product> findById(String productId) {
 		return webClient.get().uri("/product/{productId}", productId).retrieve().bodyToMono(Product.class)
 				.onErrorResume(WebClientResponseException.NotFound.class, ex -> Mono.empty()).onErrorResume(
@@ -34,6 +39,7 @@ public class ProductRepositoryImpl implements IProductRepository {
 	}
 
 	@Override
+	@Cacheable()
 	public Mono<List<String>> getSimilarProducts(String productId) {
 
 		return webClient.get().uri("/product/{productId}/similarids", productId).retrieve()
