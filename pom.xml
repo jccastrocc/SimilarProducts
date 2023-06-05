@@ -45,6 +45,12 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -65,7 +71,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
@@ -83,10 +89,22 @@
 		<profile>
 			<id>develop</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
 				<spring.profiles.active>develop</spring.profiles.active>
+				<filterFile>
+					src/main/filters/filter-${spring.profiles.active}.properties</filterFile>
+				<contexto>/${project.build.finalName}</contexto>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>production</spring.profiles.active>
 				<filterFile>
 					src/main/filters/filter-${spring.profiles.active}.properties</filterFile>
 				<contexto>/${project.build.finalName}</contexto>

@@ -15,7 +15,7 @@ To run the service, follow these steps:
 4. Run the following command to start the service:
 
    ```bash
-   docker-compose up -d similar-products
+   docker-compose up -d similar_products
    ```
 
    This will start the necessary containers and get the similar products service up and running.
@@ -28,15 +28,38 @@ To run the service, follow these steps:
 
      Example response:
      ```json
-     [{"id":"1","name":"Shirt","price":9.99,"availability":true},{"id":"2","name":"Dress","price":19.99,"availability":true}]
+   [
+      {
+         "id": "1",
+         "name": "Shirt",
+         "price": 9.99,
+         "availability": true
+      },
+      {
+         "id": "2",
+         "name": "Dress",
+         "price": 19.99,
+         "availability": true
+      }
+    ]
      ```
      
-		
 		Example request Not Found: GET http://localhost:5000/product/64/similar
 	
-		 If the specified product ID is not found, the service will return a 404 status code with the following response:
-		  Example response:
-	     ```json
+		If the specified product ID is not found, the service will return a 404 status code with the following response:
+	  Example response:
+		  
+	    ```json
 	     Product Not found
 	     ```
-	 
+
+# Swagger
+
+Swagger is integrated into the Similar Products Service to provide detailed documentation and facilitate API exploration.
+
+To access the Swagger UI, use the following URL:
+
+Localhost: http://localhost:5000/swagger-ui.html
+Swagger is integrated into the Similar Products Service to provide detailed documentation and facilitate API exploration.
+
+Feel free to experiment with the API using the Swagger UI and refer to the documentation for more information on the available endpoints and their usage.

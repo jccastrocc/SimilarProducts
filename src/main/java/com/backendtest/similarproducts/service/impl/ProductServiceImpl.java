@@ -11,11 +11,10 @@ import com.backendtest.similarproducts.model.dto.Product;
 import com.backendtest.similarproducts.repository.IProductRepository;
 import com.backendtest.similarproducts.service.IProductService;
 
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@CacheConfig(cacheNames = {"similarProducts"})
+@CacheConfig(cacheNames = {"productServiceCache"})
 @Service
 public class ProductServiceImpl implements IProductService{
 	private IProductRepository productRepository;
@@ -35,7 +34,7 @@ public class ProductServiceImpl implements IProductService{
 	public Mono<List<Product>> getSimilarProducts(String productId){
 		return productRepository.getSimilarProducts(productId)
 				.flatMapMany(Flux::fromIterable)
-	            .flatMap(this::findProductByIdOrNull) 
+	            .flatMap(this::getProduct) 
 	            .filter(Objects::nonNull)
 	            .distinct() 
 	            .collectList()
@@ -48,9 +47,4 @@ public class ProductServiceImpl implements IProductService{
 	            });
 	}
 	
-	private Mono<Product> findProductByIdOrNull(String productId) {
-		
-	    return productRepository.findById(productId)
-	            .onErrorResume(throwable -> Mono.empty());
-	}
 }

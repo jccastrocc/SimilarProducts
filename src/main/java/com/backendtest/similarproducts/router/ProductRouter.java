@@ -25,8 +25,6 @@ import com.backendtest.similarproducts.model.dto.Product;
 @Configuration
 public class ProductRouter {
 
-	@Autowired
-	ProductHandler productHandler;
 	
 	@Bean
 	@RouterOperations(
@@ -58,7 +56,7 @@ public class ProductRouter {
                          )
                  )
 			})
-	public RouterFunction<ServerResponse> productRoutes() {
+	public RouterFunction<ServerResponse> productRoutes(ProductHandler productHandler) {
 		 return RouterFunctions.route()
 	                .GET("/product/{productId}/similar", productHandler::getSimilarProducts)
 	                .build();

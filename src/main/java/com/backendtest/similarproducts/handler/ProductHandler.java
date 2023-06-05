@@ -1,7 +1,5 @@
 package com.backendtest.similarproducts.handler;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -12,7 +10,6 @@ import com.backendtest.similarproducts.model.dto.Product;
 import com.backendtest.similarproducts.service.IProductService;
 
 import reactor.core.publisher.Mono;
-
 
 @Component
 public class ProductHandler {
@@ -36,14 +33,10 @@ public class ProductHandler {
 
 	public Mono<ServerResponse> getSimilarProducts(ServerRequest request) {
 		String productId = request.pathVariable("productId");
-		Mono<List<Product>> productMono = productService.getSimilarProducts(productId);
-		
-		return ServerResponse.ok().body(productMono,List.class);
-		/*
-		 * return productService.getSimilarProducts(productId).flatMap(ids ->
-		 * ServerResponse.ok().bodyValue(ids))
-		 * .switchIfEmpty(ServerResponse.status(HttpStatus.NOT_FOUND)
-		 * .contentType(MediaType.APPLICATION_JSON) .bodyValue("Product Not found"));
-		 */
+
+		return productService.getSimilarProducts(productId).flatMap(ids -> ServerResponse.ok().bodyValue(ids))
+				.switchIfEmpty(ServerResponse.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON)
+						.bodyValue("{\"error\": \"Product Not found\"}"));
+
 	}
 }
