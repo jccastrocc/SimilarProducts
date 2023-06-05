@@ -13,7 +13,7 @@
 	<groupId>com.backendtest.similarproducts</groupId>
 	<artifactId>similar-products</artifactId>
 	<version>1.0</version>
-	
+
 	<name>similar-products</name>
 	<description>Backend dev technical test</description>
 
@@ -30,7 +30,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -46,31 +45,75 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-core</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
+			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<profiles>
 		<profile>
 			<id>develop</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
 				<spring.profiles.active>develop</spring.profiles.active>
-				<filterFile>src/main/filters/filter-${spring.profiles.active}.properties</filterFile>
+				<filterFile>
+					src/main/filters/filter-${spring.profiles.active}.properties</filterFile>
+				<contexto>/${project.build.finalName}</contexto>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>production</spring.profiles.active>
+				<filterFile>
+					src/main/filters/filter-${spring.profiles.active}.properties</filterFile>
 				<contexto>/${project.build.finalName}</contexto>
 			</properties>
 		</profile>
 	</profiles>
 
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 		<filters>
 			<filter>${filterFile}</filter>
 		</filters>

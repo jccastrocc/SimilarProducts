@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  similar_products:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: similar_products
+    ports:
+      - 5000:5000
+    volumes:
+      - ./src/main/filters/filter-production.properties:/app/filter-production.properties
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
